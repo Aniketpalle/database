@@ -1,0 +1,132 @@
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 10
+Server version: 8.0.40 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> create database prac;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> use prac;
+Database changed
+mysql> create table student(id int,name varchar(20),marks int,city varchar(20));
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> insert into student values(1,"raj",50,"pune"),
+    -> (2,"verr",60,"mumbai"),
+    -> (3,"sai",70,"delhi"),
+    -> (4,"parth",29,"paris"),
+    -> (5,"me",100,"london");
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> table student;
++------+-------+-------+--------+
+| id   | name  | marks | city   |
++------+-------+-------+--------+
+|    1 | raj   |    50 | pune   |
+|    2 | verr  |    60 | mumbai |
+|    3 | sai   |    70 | delhi  |
+|    4 | parth |    29 | paris  |
+|    5 | me    |   100 | london |
++------+-------+-------+--------+
+5 rows in set (0.00 sec)
+
+mysql> select*from where city="pune";
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where city="pune"' at line 1
+mysql> select*from student where city="pune";
++------+------+-------+------+
+| id   | name | marks | city |
++------+------+-------+------+
+|    1 | raj  |    50 | pune |
++------+------+-------+------+
+1 row in set (0.01 sec)
+
+mysql> select*from student where marks>50;
++------+------+-------+--------+
+| id   | name | marks | city   |
++------+------+-------+--------+
+|    2 | verr |    60 | mumbai |
+|    3 | sai  |    70 | delhi  |
+|    5 | me   |   100 | london |
++------+------+-------+--------+
+3 rows in set (0.00 sec)
+
+mysql> select*from student where name like "p%";
++------+-------+-------+-------+
+| id   | name  | marks | city  |
++------+-------+-------+-------+
+|    4 | parth |    29 | paris |
++------+-------+-------+-------+
+1 row in set (0.01 sec)
+
+mysql> select name,marks from student;
++-------+-------+
+| name  | marks |
++-------+-------+
+| raj   |    50 |
+| verr  |    60 |
+| sai   |    70 |
+| parth |    29 |
+| me    |   100 |
++-------+-------+
+5 rows in set (0.00 sec)
+
+mysql> select*from student orderby marks asc;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'marks asc' at line 1
+mysql> select*from student order by marks ASC;
++------+-------+-------+--------+
+| id   | name  | marks | city   |
++------+-------+-------+--------+
+|    4 | parth |    29 | paris  |
+|    1 | raj   |    50 | pune   |
+|    2 | verr  |    60 | mumbai |
+|    3 | sai   |    70 | delhi  |
+|    5 | me    |   100 | london |
++------+-------+-------+--------+
+5 rows in set (0.01 sec)
+
+mysql> select*from student order by marks desc;
++------+-------+-------+--------+
+| id   | name  | marks | city   |
++------+-------+-------+--------+
+|    5 | me    |   100 | london |
+|    3 | sai   |    70 | delhi  |
+|    2 | verr  |    60 | mumbai |
+|    1 | raj   |    50 | pune   |
+|    4 | parth |    29 | paris  |
++------+-------+-------+--------+
+5 rows in set (0.00 sec)
+
+mysql> select count(*)from student;
++----------+
+| count(*) |
++----------+
+|        5 |
++----------+
+1 row in set (0.02 sec)
+
+mysql> select max(marks) from student;
++------------+
+| max(marks) |
++------------+
+|        100 |
++------------+
+1 row in set (0.01 sec)
+
+mysql> select min(marks) from student;
++------------+
+| min(marks) |
++------------+
+|         29 |
++------------+
+1 row in set (0.00 sec)
+
+mysql>

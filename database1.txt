@@ -1,0 +1,636 @@
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 9
+Server version: 8.0.40 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> create database information;
+Query OK, 1 row affected (0.02 sec)
+
+mysql> use information;
+Database changed
+mysql> create table student_info;
+ERROR 4028 (HY000): A table must have at least one visible column.
+mysql> create table student_info(id int,name varchar(20),marks1 int,marks2 int,role varchar(20);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> create table student(id int,name varchar(20),marks1 int,marks2 int,role varchar(20));
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> insert into student (1,"aniket",20,30,monitor),(2,"myra",50,60,"headgirl");
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '1,"aniket",20,30,monitor),(2,"myra",50,60,"headgirl")' at line 1
+mysql> insert into student values(1,"aniket",20,30,monitor),(2,"myra",50,60,"headgirl");
+ERROR 1054 (42S22): Unknown column 'monitor' in 'field list'
+mysql> insert into student values(1,"aniket",20,30,'monitor'),(2,"myra",50,60,"headgirl");
+Query OK, 2 rows affected (0.02 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> insert into student values(3,"aarohi",10,40,'vicemonitor'),(4,"parth",77,9,"headboy");
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> table student;
++------+--------+--------+--------+-------------+
+| id   | name   | marks1 | marks2 | role        |
++------+--------+--------+--------+-------------+
+|    1 | aniket |     20 |     30 | monitor     |
+|    2 | myra   |     50 |     60 | headgirl    |
+|    3 | aarohi |     10 |     40 | vicemonitor |
+|    4 | parth  |     77 |      9 | headboy     |
++------+--------+--------+--------+-------------+
+4 rows in set (0.00 sec)
+
+mysql> alter table student add column percentage int;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> table student;
++------+--------+--------+--------+-------------+------------+
+| id   | name   | marks1 | marks2 | role        | percentage |
++------+--------+--------+--------+-------------+------------+
+|    1 | aniket |     20 |     30 | monitor     |       NULL |
+|    2 | myra   |     50 |     60 | headgirl    |       NULL |
+|    3 | aarohi |     10 |     40 | vicemonitor |       NULL |
+|    4 | parth  |     77 |      9 | headboy     |       NULL |
++------+--------+--------+--------+-------------+------------+
+4 rows in set (0.00 sec)
+
+mysql> update student set percenatge=(marks1+marks2)/2;
+ERROR 1054 (42S22): Unknown column 'percenatge' in 'field list'
+mysql> update student set percentage=(marks1+marks2)/2;
+Query OK, 4 rows affected (0.02 sec)
+Rows matched: 4  Changed: 4  Warnings: 0
+
+mysql> table student;
++------+--------+--------+--------+-------------+------------+
+| id   | name   | marks1 | marks2 | role        | percentage |
++------+--------+--------+--------+-------------+------------+
+|    1 | aniket |     20 |     30 | monitor     |         25 |
+|    2 | myra   |     50 |     60 | headgirl    |         55 |
+|    3 | aarohi |     10 |     40 | vicemonitor |         25 |
+|    4 | parth  |     77 |      9 | headboy     |         43 |
++------+--------+--------+--------+-------------+------------+
+4 rows in set (0.00 sec)
+
+mysql> alter table student add column grade varchar(20);
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> update student set grade=("a","B","C","D");
+ERROR 1241 (21000): Operand should contain 1 column(s)
+mysql> table student;
++------+--------+--------+--------+-------------+------------+-------+
+| id   | name   | marks1 | marks2 | role        | percentage | grade |
++------+--------+--------+--------+-------------+------------+-------+
+|    1 | aniket |     20 |     30 | monitor     |         25 | NULL  |
+|    2 | myra   |     50 |     60 | headgirl    |         55 | NULL  |
+|    3 | aarohi |     10 |     40 | vicemonitor |         25 | NULL  |
+|    4 | parth  |     77 |      9 | headboy     |         43 | NULL  |
++------+--------+--------+--------+-------------+------------+-------+
+4 rows in set (0.00 sec)
+
+mysql> alter table student change id roll_no int;
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> table student;
++---------+--------+--------+--------+-------------+------------+-------+
+| roll_no | name   | marks1 | marks2 | role        | percentage | grade |
++---------+--------+--------+--------+-------------+------------+-------+
+|       1 | aniket |     20 |     30 | monitor     |         25 | NULL  |
+|       2 | myra   |     50 |     60 | headgirl    |         55 | NULL  |
+|       3 | aarohi |     10 |     40 | vicemonitor |         25 | NULL  |
+|       4 | parth  |     77 |      9 | headboy     |         43 | NULL  |
++---------+--------+--------+--------+-------------+------------+-------+
+4 rows in set (0.00 sec)
+
+mysql> alter table student add column pass  varchar(20) after marks2;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> table student;
++---------+--------+--------+--------+------+-------------+------------+-------+
+| roll_no | name   | marks1 | marks2 | pass | role        | percentage | grade |
++---------+--------+--------+--------+------+-------------+------------+-------+
+|       1 | aniket |     20 |     30 | NULL | monitor     |         25 | NULL  |
+|       2 | myra   |     50 |     60 | NULL | headgirl    |         55 | NULL  |
+|       3 | aarohi |     10 |     40 | NULL | vicemonitor |         25 | NULL  |
+|       4 | parth  |     77 |      9 | NULL | headboy     |         43 | NULL  |
++---------+--------+--------+--------+------+-------------+------------+-------+
+4 rows in set (0.00 sec)
+
+mysql> update  student set grade="a"'
+    '> update  student set grade="a";
+    '> update  student set grade="b";
+    '> update  student set grade="c";
+    '> update  student set grade="d";
+    '>
+    '> update  student set grade="d";
+    '> update  student set grade="A" where id^C
+mysql> ^C
+mysql> ^C
+mysql> update  student set grade="c" where id=1;
+ERROR 1054 (42S22): Unknown column 'id' in 'where clause'
+mysql> update  student set grade="c" where roll_no=1;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> table student;
++---------+--------+--------+--------+------+-------------+------------+-------+
+| roll_no | name   | marks1 | marks2 | pass | role        | percentage | grade |
++---------+--------+--------+--------+------+-------------+------------+-------+
+|       1 | aniket |     20 |     30 | NULL | monitor     |         25 | c     |
+|       2 | myra   |     50 |     60 | NULL | headgirl    |         55 | NULL  |
+|       3 | aarohi |     10 |     40 | NULL | vicemonitor |         25 | NULL  |
+|       4 | parth  |     77 |      9 | NULL | headboy     |         43 | NULL  |
++---------+--------+--------+--------+------+-------------+------------+-------+
+4 rows in set (0.00 sec)
+
+mysql> update student set grade="A" where id=2;
+ERROR 1054 (42S22): Unknown column 'id' in 'where clause'
+mysql> update student set grade="A" where roll_no=2;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update student set grade="A+" where roll_no=3;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update student set grade="b+" where roll_no=4;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> table student;
++---------+--------+--------+--------+------+-------------+------------+-------+
+| roll_no | name   | marks1 | marks2 | pass | role        | percentage | grade |
++---------+--------+--------+--------+------+-------------+------------+-------+
+|       1 | aniket |     20 |     30 | NULL | monitor     |         25 | c     |
+|       2 | myra   |     50 |     60 | NULL | headgirl    |         55 | A     |
+|       3 | aarohi |     10 |     40 | NULL | vicemonitor |         25 | A+    |
+|       4 | parth  |     77 |      9 | NULL | headboy     |         43 | b+    |
++---------+--------+--------+--------+------+-------------+------------+-------+
+4 rows in set (0.00 sec)
+
+mysql> select 7/3,7 dic 3;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '3' at line 1
+mysql> select marks1,marks1 from student where marks%2=0;
+ERROR 1054 (42S22): Unknown column 'marks' in 'where clause'
+mysql> select marks1,marks1 from student where marks1%2=0;
++--------+--------+
+| marks1 | marks1 |
++--------+--------+
+|     20 |     20 |
+|     50 |     50 |
+|     10 |     10 |
++--------+--------+
+3 rows in set (0.01 sec)
+
+mysql> select marks1,marks1 from student where  even marks1%2=0;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'marks1%2=0' at line 1
+mysql> select marks1,marks1 from student where  marks1%2=0;
++--------+--------+
+| marks1 | marks1 |
++--------+--------+
+|     20 |     20 |
+|     50 |     50 |
+|     10 |     10 |
++--------+--------+
+3 rows in set (0.00 sec)
+
+mysql> select marks1,marks1 from student where  marks1%2=1;
++--------+--------+
+| marks1 | marks1 |
++--------+--------+
+|     77 |     77 |
++--------+--------+
+1 row in set (0.00 sec)
+
+mysql> select marks,marks1 from student where  marks1%2=1;
+ERROR 1054 (42S22): Unknown column 'marks' in 'field list'
+mysql> select marks1,marks from student where  marks1%2=1;
+ERROR 1054 (42S22): Unknown column 'marks' in 'field list'
+mysql> select marks1,marks from student where  marks1%2=1;
+ERROR 1054 (42S22): Unknown column 'marks' in 'field list'
+mysql> select marks1,marks1 from student where  marks1%2=1;
++--------+--------+
+| marks1 | marks1 |
++--------+--------+
+|     77 |     77 |
++--------+--------+
+1 row in set (0.00 sec)
+
+mysql> select marks2,marks2 from student where  marks2%2=1;
++--------+--------+
+| marks2 | marks2 |
++--------+--------+
+|      9 |      9 |
++--------+--------+
+1 row in set (0.00 sec)
+
+mysql> select marks2 as oddmarks from student where  marks2%2=1;
++----------+
+| oddmarks |
++----------+
+|        9 |
++----------+
+1 row in set (0.01 sec)
+
+mysql> alter table student change marks1 sem1 ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> alter table student change marks1 sem1 int ;
+Query OK, 0 rows affected (0.08 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table student change marks2 sem2 int ;
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> table student;
++---------+--------+------+------+------+-------------+------------+-------+
+| roll_no | name   | sem1 | sem2 | pass | role        | percentage | grade |
++---------+--------+------+------+------+-------------+------------+-------+
+|       1 | aniket |   20 |   30 | NULL | monitor     |         25 | c     |
+|       2 | myra   |   50 |   60 | NULL | headgirl    |         55 | A     |
+|       3 | aarohi |   10 |   40 | NULL | vicemonitor |         25 | A+    |
+|       4 | parth  |   77 |    9 | NULL | headboy     |         43 | b+    |
++---------+--------+------+------+------+-------------+------------+-------+
+4 rows in set (0.00 sec)
+
+mysql> update student set pass="F" where sem2=20;
+Query OK, 0 rows affected (0.01 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+mysql> update student set pass="P" where sem2=60;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> table student;
++---------+--------+------+------+------+-------------+------------+-------+
+| roll_no | name   | sem1 | sem2 | pass | role        | percentage | grade |
++---------+--------+------+------+------+-------------+------------+-------+
+|       1 | aniket |   20 |   30 | NULL | monitor     |         25 | c     |
+|       2 | myra   |   50 |   60 | P    | headgirl    |         55 | A     |
+|       3 | aarohi |   10 |   40 | NULL | vicemonitor |         25 | A+    |
+|       4 | parth  |   77 |    9 | NULL | headboy     |         43 | b+    |
++---------+--------+------+------+------+-------------+------------+-------+
+4 rows in set (0.00 sec)
+
+mysql> update student set pass="P" where sem2=40;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> table student;
++---------+--------+------+------+------+-------------+------------+-------+
+| roll_no | name   | sem1 | sem2 | pass | role        | percentage | grade |
++---------+--------+------+------+------+-------------+------------+-------+
+|       1 | aniket |   20 |   30 | NULL | monitor     |         25 | c     |
+|       2 | myra   |   50 |   60 | P    | headgirl    |         55 | A     |
+|       3 | aarohi |   10 |   40 | P    | vicemonitor |         25 | A+    |
+|       4 | parth  |   77 |    9 | NULL | headboy     |         43 | b+    |
++---------+--------+------+------+------+-------------+------------+-------+
+4 rows in set (0.00 sec)
+
+mysql>
+rd: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 9
+Server version: 8.0.40 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> create database information;
+Query OK, 1 row affected (0.02 sec)
+
+mysql> use information;
+Database changed
+mysql> create table student_info;
+ERROR 4028 (HY000): A table must have at least one visible column.
+mysql> create table student_info(id int,name varchar(20),marks1 int,marks2 int,role varchar(20);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> create table student(id int,name varchar(20),marks1 int,marks2 int,role varchar(20));
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> insert into student (1,"aniket",20,30,monitor),(2,"myra",50,60,"headgirl");
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '1,"aniket",20,30,monitor),(2,"myra",50,60,"headgirl")' at line 1
+mysql> insert into student values(1,"aniket",20,30,monitor),(2,"myra",50,60,"headgirl");
+ERROR 1054 (42S22): Unknown column 'monitor' in 'field list'
+mysql> insert into student values(1,"aniket",20,30,'monitor'),(2,"myra",50,60,"headgirl");
+Query OK, 2 rows affected (0.02 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> insert into student values(3,"aarohi",10,40,'vicemonitor'),(4,"parth",77,9,"headboy");
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> table student;
++------+--------+--------+--------+-------------+
+| id   | name   | marks1 | marks2 | role        |
++------+--------+--------+--------+-------------+
+|    1 | aniket |     20 |     30 | monitor     |
+|    2 | myra   |     50 |     60 | headgirl    |
+|    3 | aarohi |     10 |     40 | vicemonitor |
+|    4 | parth  |     77 |      9 | headboy     |
++------+--------+--------+--------+-------------+
+4 rows in set (0.00 sec)
+
+mysql> alter table student add column percentage int;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> table student;
++------+--------+--------+--------+-------------+------------+
+| id   | name   | marks1 | marks2 | role        | percentage |
++------+--------+--------+--------+-------------+------------+
+|    1 | aniket |     20 |     30 | monitor     |       NULL |
+|    2 | myra   |     50 |     60 | headgirl    |       NULL |
+|    3 | aarohi |     10 |     40 | vicemonitor |       NULL |
+|    4 | parth  |     77 |      9 | headboy     |       NULL |
++------+--------+--------+--------+-------------+------------+
+4 rows in set (0.00 sec)
+
+mysql> update student set percenatge=(marks1+marks2)/2;
+ERROR 1054 (42S22): Unknown column 'percenatge' in 'field list'
+mysql> update student set percentage=(marks1+marks2)/2;
+Query OK, 4 rows affected (0.02 sec)
+Rows matched: 4  Changed: 4  Warnings: 0
+
+mysql> table student;
++------+--------+--------+--------+-------------+------------+
+| id   | name   | marks1 | marks2 | role        | percentage |
++------+--------+--------+--------+-------------+------------+
+|    1 | aniket |     20 |     30 | monitor     |         25 |
+|    2 | myra   |     50 |     60 | headgirl    |         55 |
+|    3 | aarohi |     10 |     40 | vicemonitor |         25 |
+|    4 | parth  |     77 |      9 | headboy     |         43 |
++------+--------+--------+--------+-------------+------------+
+4 rows in set (0.00 sec)
+
+mysql> alter table student add column grade varchar(20);
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> update student set grade=("a","B","C","D");
+ERROR 1241 (21000): Operand should contain 1 column(s)
+mysql> table student;
++------+--------+--------+--------+-------------+------------+-------+
+| id   | name   | marks1 | marks2 | role        | percentage | grade |
++------+--------+--------+--------+-------------+------------+-------+
+|    1 | aniket |     20 |     30 | monitor     |         25 | NULL  |
+|    2 | myra   |     50 |     60 | headgirl    |         55 | NULL  |
+|    3 | aarohi |     10 |     40 | vicemonitor |         25 | NULL  |
+|    4 | parth  |     77 |      9 | headboy     |         43 | NULL  |
++------+--------+--------+--------+-------------+------------+-------+
+4 rows in set (0.00 sec)
+
+mysql> alter table student change id roll_no int;
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> table student;
++---------+--------+--------+--------+-------------+------------+-------+
+| roll_no | name   | marks1 | marks2 | role        | percentage | grade |
++---------+--------+--------+--------+-------------+------------+-------+
+|       1 | aniket |     20 |     30 | monitor     |         25 | NULL  |
+|       2 | myra   |     50 |     60 | headgirl    |         55 | NULL  |
+|       3 | aarohi |     10 |     40 | vicemonitor |         25 | NULL  |
+|       4 | parth  |     77 |      9 | headboy     |         43 | NULL  |
++---------+--------+--------+--------+-------------+------------+-------+
+4 rows in set (0.00 sec)
+
+mysql> alter table student add column pass  varchar(20) after marks2;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> table student;
++---------+--------+--------+--------+------+-------------+------------+-------+
+| roll_no | name   | marks1 | marks2 | pass | role        | percentage | grade |
++---------+--------+--------+--------+------+-------------+------------+-------+
+|       1 | aniket |     20 |     30 | NULL | monitor     |         25 | NULL  |
+|       2 | myra   |     50 |     60 | NULL | headgirl    |         55 | NULL  |
+|       3 | aarohi |     10 |     40 | NULL | vicemonitor |         25 | NULL  |
+|       4 | parth  |     77 |      9 | NULL | headboy     |         43 | NULL  |
++---------+--------+--------+--------+------+-------------+------------+-------+
+4 rows in set (0.00 sec)
+
+mysql> update  student set grade="a"'
+    '> update  student set grade="a";
+    '> update  student set grade="b";
+    '> update  student set grade="c";
+    '> update  student set grade="d";
+    '>
+    '> update  student set grade="d";
+    '> update  student set grade="A" where id^C
+mysql> ^C
+mysql> ^C
+mysql> update  student set grade="c" where id=1;
+ERROR 1054 (42S22): Unknown column 'id' in 'where clause'
+mysql> update  student set grade="c" where roll_no=1;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> table student;
++---------+--------+--------+--------+------+-------------+------------+-------+
+| roll_no | name   | marks1 | marks2 | pass | role        | percentage | grade |
++---------+--------+--------+--------+------+-------------+------------+-------+
+|       1 | aniket |     20 |     30 | NULL | monitor     |         25 | c     |
+|       2 | myra   |     50 |     60 | NULL | headgirl    |         55 | NULL  |
+|       3 | aarohi |     10 |     40 | NULL | vicemonitor |         25 | NULL  |
+|       4 | parth  |     77 |      9 | NULL | headboy     |         43 | NULL  |
++---------+--------+--------+--------+------+-------------+------------+-------+
+4 rows in set (0.00 sec)
+
+mysql> update student set grade="A" where id=2;
+ERROR 1054 (42S22): Unknown column 'id' in 'where clause'
+mysql> update student set grade="A" where roll_no=2;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update student set grade="A+" where roll_no=3;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update student set grade="b+" where roll_no=4;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> table student;
++---------+--------+--------+--------+------+-------------+------------+-------+
+| roll_no | name   | marks1 | marks2 | pass | role        | percentage | grade |
++---------+--------+--------+--------+------+-------------+------------+-------+
+|       1 | aniket |     20 |     30 | NULL | monitor     |         25 | c     |
+|       2 | myra   |     50 |     60 | NULL | headgirl    |         55 | A     |
+|       3 | aarohi |     10 |     40 | NULL | vicemonitor |         25 | A+    |
+|       4 | parth  |     77 |      9 | NULL | headboy     |         43 | b+    |
++---------+--------+--------+--------+------+-------------+------------+-------+
+4 rows in set (0.00 sec)
+
+mysql> select 7/3,7 dic 3;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '3' at line 1
+mysql> select marks1,marks1 from student where marks%2=0;
+ERROR 1054 (42S22): Unknown column 'marks' in 'where clause'
+mysql> select marks1,marks1 from student where marks1%2=0;
++--------+--------+
+| marks1 | marks1 |
++--------+--------+
+|     20 |     20 |
+|     50 |     50 |
+|     10 |     10 |
++--------+--------+
+3 rows in set (0.01 sec)
+
+mysql> select marks1,marks1 from student where  even marks1%2=0;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'marks1%2=0' at line 1
+mysql> select marks1,marks1 from student where  marks1%2=0;
++--------+--------+
+| marks1 | marks1 |
++--------+--------+
+|     20 |     20 |
+|     50 |     50 |
+|     10 |     10 |
++--------+--------+
+3 rows in set (0.00 sec)
+
+mysql> select marks1,marks1 from student where  marks1%2=1;
++--------+--------+
+| marks1 | marks1 |
++--------+--------+
+|     77 |     77 |
++--------+--------+
+1 row in set (0.00 sec)
+
+mysql> select marks,marks1 from student where  marks1%2=1;
+ERROR 1054 (42S22): Unknown column 'marks' in 'field list'
+mysql> select marks1,marks from student where  marks1%2=1;
+ERROR 1054 (42S22): Unknown column 'marks' in 'field list'
+mysql> select marks1,marks from student where  marks1%2=1;
+ERROR 1054 (42S22): Unknown column 'marks' in 'field list'
+mysql> select marks1,marks1 from student where  marks1%2=1;
++--------+--------+
+| marks1 | marks1 |
++--------+--------+
+|     77 |     77 |
++--------+--------+
+1 row in set (0.00 sec)
+
+mysql> select marks2,marks2 from student where  marks2%2=1;
++--------+--------+
+| marks2 | marks2 |
++--------+--------+
+|      9 |      9 |
++--------+--------+
+1 row in set (0.00 sec)
+
+mysql> select marks2 as oddmarks from student where  marks2%2=1;
++----------+
+| oddmarks |
++----------+
+|        9 |
++----------+
+1 row in set (0.01 sec)
+
+mysql> alter table student change marks1 sem1 ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> alter table student change marks1 sem1 int ;
+Query OK, 0 rows affected (0.08 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table student change marks2 sem2 int ;
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> table student;
++---------+--------+------+------+------+-------------+------------+-------+
+| roll_no | name   | sem1 | sem2 | pass | role        | percentage | grade |
++---------+--------+------+------+------+-------------+------------+-------+
+|       1 | aniket |   20 |   30 | NULL | monitor     |         25 | c     |
+|       2 | myra   |   50 |   60 | NULL | headgirl    |         55 | A     |
+|       3 | aarohi |   10 |   40 | NULL | vicemonitor |         25 | A+    |
+|       4 | parth  |   77 |    9 | NULL | headboy     |         43 | b+    |
++---------+--------+------+------+------+-------------+------------+-------+
+4 rows in set (0.00 sec)
+
+mysql> update student set pass="F" where sem2=20;
+Query OK, 0 rows affected (0.01 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+mysql> update student set pass="P" where sem2=60;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> table student;
++---------+--------+------+------+------+-------------+------------+-------+
+| roll_no | name   | sem1 | sem2 | pass | role        | percentage | grade |
++---------+--------+------+------+------+-------------+------------+-------+
+|       1 | aniket |   20 |   30 | NULL | monitor     |         25 | c     |
+|       2 | myra   |   50 |   60 | P    | headgirl    |         55 | A     |
+|       3 | aarohi |   10 |   40 | NULL | vicemonitor |         25 | A+    |
+|       4 | parth  |   77 |    9 | NULL | headboy     |         43 | b+    |
++---------+--------+------+------+------+-------------+------------+-------+
+4 rows in set (0.00 sec)
+
+mysql> update student set pass="P" where sem2=40;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> table student;
++---------+--------+------+------+------+-------------+------------+-------+
+| roll_no | name   | sem1 | sem2 | pass | role        | percentage | grade |
++---------+--------+------+------+------+-------------+------------+-------+
+|       1 | aniket |   20 |   30 | NULL | monitor     |         25 | c     |
+|       2 | myra   |   50 |   60 | P    | headgirl    |         55 | A     |
+|       3 | aarohi |   10 |   40 | P    | vicemonitor |         25 | A+    |
+|       4 | parth  |   77 |    9 | NULL | headboy     |         43 | b+    |
++---------+--------+------+------+------+-------------+------------+-------+
+4 rows in set (0.00 sec)
+
+mysql> alter  table student add column clg_name varchar(20);
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> table student;
++---------+--------+------+------+------+-------------+------------+-------+----------+
+| roll_no | name   | sem1 | sem2 | pass | role        | percentage | grade | clg_name |
++---------+--------+------+------+------+-------------+------------+-------+----------+
+|       1 | aniket |   20 |   30 | NULL | monitor     |         25 | c     | NULL     |
+|       2 | myra   |   50 |   60 | P    | headgirl    |         55 | A     | NULL     |
+|       3 | aarohi |   10 |   40 | P    | vicemonitor |         25 | A+    | NULL     |
+|       4 | parth  |   77 |    9 | NULL | headboy     |         43 | b+    | NULL     |
++---------+--------+------+------+------+-------------+------------+-------+----------+
+4 rows in set (0.00 sec)
+
+mysql> update table student set clg_name="gs" default;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'table student set clg_name="gs" default' at line 1
+mysql> update table student set clg_name="gs";
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'table student set clg_name="gs"' at line 1
+mysql> update table student set clg_name="gs" where clg_name=NULL;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'table student set clg_name="gs" where clg_name=NULL' at line 1
+mysql> update table student set clg_name="gs" where clg_name is NULL;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'table student set clg_name="gs" where clg_name is NULL' at line 1
+mysql> update  student set clg_name="gs" where clg_name is NULL;
+Query OK, 4 rows affected (0.02 sec)
+Rows matched: 4  Changed: 4  Warnings: 0
+
+mysql> table student;
++---------+--------+------+------+------+-------------+------------+-------+----------+
+| roll_no | name   | sem1 | sem2 | pass | role        | percentage | grade | clg_name |
++---------+--------+------+------+------+-------------+------------+-------+----------+
+|       1 | aniket |   20 |   30 | NULL | monitor     |         25 | c     | gs       |
+|       2 | myra   |   50 |   60 | P    | headgirl    |         55 | A     | gs       |
+|       3 | aarohi |   10 |   40 | P    | vicemonitor |         25 | A+    | gs       |
+|       4 | parth  |   77 |    9 | NULL | headboy     |         43 | b+    | gs       |
++---------+--------+------+------+------+-------------+------------+-------+----------+
+4 rows in set (0.00 sec)
+
+mysql>
